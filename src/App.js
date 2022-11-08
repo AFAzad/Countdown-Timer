@@ -11,7 +11,7 @@ const App = () => {
 
   let interval = useRef();
   const startTimer= () =>{
-    const CountdownDate =new Date('Nov 22,2022 00:00:00').getTime();
+    const CountdownDate =new Date('Jan 01,2023 00:00:00').getTime();
     interval = setInterval(()=>{
       const now = new Date().getTime();
       const distance = CountdownDate - now;
@@ -52,7 +52,7 @@ useEffect(()=>{
             Countdown to a really special date. One you could never imagine !
           </p> <br />
           <p>Patience is not the ability to wait , but the ability to keep a good attitude while waiting</p> <br />
-          <p>Projected by Raaz</p>
+          <p>Projected by Abul Azad</p>
         </div>
         <div>
           <section>
