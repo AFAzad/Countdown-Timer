@@ -1,72 +1,90 @@
-import React , {useState}from "react";
+import React, {useEffect,  useRef, useState } from "react";
 
 import "./App.css";
 
 const App = () => {
-	const [timeDays,settimeDays]=useState('00');
-	const [timerhours,setTimerHours]=useState('00');
-	const [timerMin,setTimerMin]=useState('00');
-	const [timeSec,setTimeSec]=useState('00');
 
-	let interval = useRef();
+  const [timerDays,setTimerDays]=useState('00');
+  const [timerHours,setTimerHours]=useState('00');
+  const [timerMin,setTimerMin]=useState('00');
+  const [timerSec,setTimerSec]=useState('00');
 
-	const starttimer =()=>{
-		const Countdowndate =  new Date("Nov 08, 2022 00: 00: 00").getTime();
-		interval = setInterval(()=>{
-			const now = new Date().getTime();
-			const distance = Countdowndate - now;
+  let interval = useRef();
+  const startTimer= () =>{
+    const CountdownDate =new Date('Nov 22,2022 00:00:00').getTime();
+    interval = setInterval(()=>{
+      const now = new Date().getTime();
+      const distance = CountdownDate - now;
 
-			
-		},1000)
-	}
+      const days = Math.floor( distance /(1000 * 60 * 60* 24));
+      const hours = Math.floor(( distance %(1000 * 60 * 60* 24)/(1000*60*60)));
+      const minutes = Math.floor(( distance %(1000 * 60 * 60 )) / (1000*60));
+      const seconds = Math.floor(( distance %(1000 * 60)) / 1000);
+
+      if  (distance < 0){
+        clearInterval(interval.current);
+
+      }else{
+        setTimerDays(days);
+        setTimerHours(hours);
+        setTimerMin(minutes);
+        setTimerSec(seconds);
+      }
+    },1000);
+  };
+
+useEffect(()=>{
+  startTimer();
+  return()=>{
+    clearInterval(interval.current);
+
+  };
+
+});
+
   return (
-	
-    <section className="main-section">
-      
-      
-        <section className="App">
-			<div>
-        <span className="countspan"></span>
-        <h2>Countdown Timer</h2>
-        {/* <p>
-          Countdown to really special date. One you could or never imagine !
-        </p> */}
-      </div></section>
-	  <section className="timer">
-	  <div>
+    <section className="timer-container">
+      <section className="timer">
+        <div>
+          <span className="timer-icon"></span>
+          <h1>Countdown Timer</h1>
+          <p>
+            Countdown to a really special date. One you could never imagine !
+          </p> <br />
+          <p>Patience is not the ability to wait , but the ability to keep a good attitude while waiting</p> <br />
+          <p>Projected by Raaz</p>
+        </div>
+        <div>
           <section>
-            <p>87</p>
+            <p>{timerDays}</p>
             <p>
               <small>Days</small>
             </p>
           </section>
           <span>:</span>
           <section>
-            <p>87</p>
+            <p>{timerHours}</p>
             <p>
               <small>Hours</small>
             </p>
           </section>
           <span>:</span>
-
           <section>
-            <p>87</p>
+            <p>{timerMin}</p>
             <p>
               <small>Minutes</small>
             </p>
           </section>
           <span>:</span>
-
           <section>
-            <p>87</p>
+            <p>{timerSec}</p>
             <p>
               <small>Seconds</small>
             </p>
           </section>
-          <span></span>
         </div>
-	  </section>
-      
+      </section>
+     
     </section>
   );
 };
